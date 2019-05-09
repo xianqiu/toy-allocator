@@ -1,0 +1,50 @@
+{
+  "userList": [
+    {
+      "id": "10001",
+      "gender": "male",
+      "age": 25
+    },
+    {
+      "id": "10002",
+      "gender": "female",
+      "age": 33
+    },
+    {
+      "id": "10003",
+      "gender": "male",
+      "age": 12
+    },
+    {
+      "id": "10004",
+      "gender": "female",
+      "age": 8
+    },
+    {
+      "id": "10005",
+      "gender": "male",
+      "age": 66
+    },
+    {
+      "id": "10006",
+      "gender": "female",
+      "age": 70
+    },
+    {
+      "id": "10007",
+      "gender": "male",
+      "age": 40
+    },
+    {
+      "id": "10008",
+      "gender": "female",
+      "age": 55
+    },
+    {
+      "id": "10009",
+      "gender": "male",
+      "age": 19
+    }
+  ]
+}
+

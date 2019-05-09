@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<Configuration>
+    <Appenders>
+        <!-- 控制台的配置 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--输出日志的格式-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%5p] - %l - %m%n"/>
+        </Console>
+        <!-- 输出文件的配置 - INFO -->
+        <RollingFile name="RollingFileInfo" fileName="./logs/info.log"
+                     filePattern="./logs/info-%d{yyyyMMdd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%5p] - %l - %m%n" charset="UTF-8"/>
+            <!--输出level及以上级别的信息 -->
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <!-- 日志文件的滚动时间间隔: 1天(单位取决于filePattern定义的粒度) -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="false"/>
+                <!-- 单个日志文件最大size -->
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+        <!-- 输出文件的配置 - ERROR -->
+        <RollingFile name="RollingFileError" fileName="./logs/error.log"
+                     filePattern="./logs/error-%d{yyyyMMdd}.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%5p] - %l - %m%n" charset="UTF-8"/>
+            <!--输出level及以上级别的信息 -->
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <!-- 日志文件的滚动时间间隔: 1天(单位取决于filePattern定义的粒度) -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 单个日志文件最大size -->
+                <SizeBasedTriggeringPolicy size="50 MB"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <!--过滤掉框架的日志信息 -->
+		<Logger name="org.springframework" level="WARN" />
+        <Logger name="org.hibernate" level="WARN" />
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="RollingFileError"/>
+        </Root>
+    </Loggers>
+</Configuration>
