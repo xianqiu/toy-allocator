@@ -30,11 +30,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- 缓存: Spring Boot 集成 Ehcache -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
-        <!-- 缓存: Ehcache -->
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
@@ -45,6 +46,8 @@
             <artifactId>cache-api</artifactId>
             <version>1.1.0</version>
         </dependency>
+        <!-- 缓存: END -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -79,6 +82,8 @@
             <artifactId>log4j-core</artifactId>
             <version>2.11.2</version>
         </dependency>
+        <!-- 日志依赖: END -->
+
         <!-- 处理JSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -92,7 +97,7 @@
             <version>2.6</version>
         </dependency>
 
-        <!-- JAXB API: 为了加载Ehcache3的xml配置文件 -->
+        <!-- JAXB API: 为了加载Ehcache3的xml配置文件(Java11专用) -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>

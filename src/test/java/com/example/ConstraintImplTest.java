@@ -49,9 +49,4 @@ public class ConstraintImplTest extends TestCase {
         Assert.assertEquals(Set.of("10001", "10002", "10007", "10008", "10009"), new HashSet<>(result));
     }
 
-    @After
-    public void clean() {
-
-    }
-
 }

@@ -15,7 +15,7 @@ public class AllocationServiceImpl implements AllocationService {
 
     private UserData userDataImpl;
     private Constraint constraintImpl;
-    private Allocator propotionAllocatorImpl;
+    private Allocator propotionAllocatorImpl;  // 按比例分配
 
     @Autowired
     public AllocationServiceImpl(UserData userDataImpl,

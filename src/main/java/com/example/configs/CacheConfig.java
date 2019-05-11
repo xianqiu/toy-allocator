@@ -17,7 +17,6 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 @Component
 public class CacheConfig {
 
-
     @Component
     public static class GenericCache implements JCacheManagerCustomizer {
 
