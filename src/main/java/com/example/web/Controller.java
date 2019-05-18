@@ -1,8 +1,9 @@
 package com.example.web;
 
+import com.example.service.AllocationService;
+import com.example.service.AllocationServiceImpl;
 import com.google.gson.Gson;
 import com.example.beans.UserPayoff;
-import com.example.service.AllocationService;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,27 @@ class AllocateResponse {
 @RestController
 public class Controller {
 
-    private AllocationService allocationServiceImpl;
+    private AllocationServiceImpl allocationServiceImpl;
 
     @Autowired
-    public Controller(AllocationService allocationServiceImpl) {
+    public Controller(AllocationServiceImpl allocationServiceImpl) {
         this.allocationServiceImpl = allocationServiceImpl;
     }
 
     @RequestMapping(value = "/allocate", method = RequestMethod.POST)
-    public String allocate(@RequestBody AllocateParams allocateParams) {
+    public String allocate(@RequestBody AllocateParams allocateParams) throws Exception {
+
+        // 异步
+        var future = allocationServiceImpl.allocateAsync(allocateParams.getUserIds(),
+                allocateParams.getTotalReward());
+        var result = Optional.ofNullable(future.get());
+
+        /* 同步
         var result = Optional.ofNullable(allocationServiceImpl.allocate(allocateParams.getUserIds(),
                 allocateParams.getTotalReward()));
+
+        */
+
         var response = new AllocateResponse();
         if (result.isPresent()) {
             response.setCode(200);  // 成功
@@ -50,7 +61,7 @@ public class Controller {
         } else {
             response.setCode(400);  // 失败
         }
-        System.out.println("Thread: " + Thread.currentThread().getId());
         return new Gson().toJson(response);
     }
+
 }

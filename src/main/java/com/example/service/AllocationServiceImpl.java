@@ -4,11 +4,15 @@ import com.example.beans.UserPayoff;
 import com.example.core.allocator.Allocator;
 import com.example.core.constraint.Constraint;
 import com.example.core.data.UserData;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @Component
 public class AllocationServiceImpl implements AllocationService {
@@ -27,6 +31,9 @@ public class AllocationServiceImpl implements AllocationService {
 
     @Override
     public List<UserPayoff> allocate(List<String> userIds, Double totalReward) {
+
+        System.out.println("Thread: " + Thread.currentThread().getName());
+
         var feasibleUserIds = constraintImpl.getFeasibleUserIds(userIds);
         var weights = new LinkedList<Double>();
         for (var userId: feasibleUserIds) {
@@ -39,6 +46,12 @@ public class AllocationServiceImpl implements AllocationService {
             userPayoffList.add(new UserPayoff(userId, payoffs.get(i)));
         }
         return userPayoffList;
+    }
+
+    @Async
+    public Future<List<UserPayoff>> allocateAsync(List<String> userIds, Double totalReward) {
+        System.out.println("Thread: " + Thread.currentThread().getName());
+        return new AsyncResult<>(allocate(userIds, totalReward));
     }
 
 }

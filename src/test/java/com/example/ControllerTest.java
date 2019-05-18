@@ -1,13 +1,14 @@
 package com.example;
 
 import com.example.beans.UserPayoff;
-import com.example.service.AllocationService;
+import com.example.service.AllocationServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -28,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ControllerTest extends TestCase {
 
     @MockBean
-    private AllocationService allocationServiceImpl;
+    private AllocationServiceImpl allocationServiceImpl;
     @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
@@ -48,7 +49,11 @@ public class ControllerTest extends TestCase {
 
     @Test
     public void allocate() throws Exception {
+        /* 同步接口
         when(allocationServiceImpl.allocate(any(), any())).thenReturn(allocationResult);
+        */
+        // 异步接口
+        when(allocationServiceImpl.allocateAsync(any(), any())).thenReturn(new AsyncResult<>(allocationResult));
         var uri = "/allocate";
         // 测试的输入参数
         var jsonString = "{\"userIds\": [\"10001\", \"10002\", \"10003\"], \"totalReward\": 100}";
